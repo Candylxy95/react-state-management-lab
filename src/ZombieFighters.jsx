@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
 import "./App.css";
+import Button from "./Button";
 
 const ZombieFighters = () => {
   const [team, setTeam] = useState([]);
@@ -92,7 +93,9 @@ const ZombieFighters = () => {
   const handleRemoveFighter = (member) => {
     if (team.length > 0) {
       setMoney((prevMoney) => prevMoney + member.price);
-      setTeam((prevFighter) => prevFighter.splice(member.idx));
+      setTeam((prevTeam) =>
+        prevTeam.filter((fighter) => fighter.name !== member.name)
+      );
       setTotalStrength((prevStr) => prevStr - member.strength);
       setTotalAgility((prevAgi) => prevAgi - member.agility);
     } else console.log("no more members");
@@ -118,9 +121,10 @@ const ZombieFighters = () => {
                   <li>Price: {member.price}</li>
                   <li>Strength: {member.strength}</li>
                   <li>Agility: {member.agility}</li>
-                  <button onClick={() => handleRemoveFighter(member)}>
-                    Remove
-                  </button>
+                  <Button
+                    onClick={() => handleRemoveFighter(member)}
+                    msg="Remove"
+                  />
                 </ul>
               </div>
             );
@@ -138,7 +142,7 @@ const ZombieFighters = () => {
                 <li>Price: {fighter.price}</li>
                 <li>Strength: {fighter.strength}</li>
                 <li>Agility: {fighter.agility}</li>
-                <button onClick={() => handleAddFighter(fighter)}>Add</button>
+                <Button onClick={() => handleAddFighter(fighter)} msg="Add" />
               </ul>
             </div>
           );
